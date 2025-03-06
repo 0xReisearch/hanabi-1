@@ -1,6 +1,6 @@
 # Hanabi-1: Financial Market Transformer
 
-A robust transformer-based model for predicting financial market movements using hourly price data and the Fear & Greed Index.
+A robust transformer-based model for predicting financial market movements using price and sentiment data.
 
 ## Overview
 
