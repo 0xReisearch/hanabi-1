@@ -8,13 +8,13 @@ This file contains hourly price data and related metrics with the following colu
 
 | Column | Description | Data Type | Example |
 |--------|-------------|-----------|---------|
-| timestamp | Unix timestamp in milliseconds since epoch | Integer | 1704067200000 |
-| price | Market price at end of hour | Float | 42568.23 |
-| volume | Trading volume in that hour | Float | 1245.67 |
-| high | Highest price during the hour | Float | 42612.45 |
-| low | Lowest price during the hour | Float | 42501.78 |
-| open | Price at start of hour | Float | 42550.34 |
-| close | Price at end of hour (same as price) | Float | 42568.23 |
+| Timestamp | Unix timestamp in milliseconds since epoch | Integer | 1704067200000 |
+| Price | Market price at end of hour | Float | 42568.23 |
+| Volume | Trading volume in that hour | Float | 1245.67 |
+| High | Highest price during the hour | Float | 42612.45 |
+| Low | Lowest price during the hour | Float | 42501.78 |
+| Open | Price at start of hour | Float | 42550.34 |
+| Close | Price at end of hour (same as price) | Float | 42568.23 |
 
 **Requirements:**
 - Must be hourly data with no missing hours
@@ -22,6 +22,7 @@ This file contains hourly price data and related metrics with the following colu
 - Timestamps must be in ascending order
 - No missing values allowed
 - At least 12 consecutive hours for prediction (more for training)
+- All column names must be capitalized as shown above
 
 ## 2. Fear & Greed Index Data (`fear_greed_index_example.csv`)
 
@@ -44,6 +45,7 @@ This file contains enhanced daily market sentiment data:
 - No missing values allowed
 - Should cover the same time period as hourly data
 - Classification values must be one of: "Extreme Fear", "Fear", "Neutral", "Greed", "Extreme Greed"
+- All column names must be lowercase as shown above
 
 ## Data Preprocessing
 
