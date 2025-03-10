@@ -8,7 +8,7 @@ This file contains hourly price data and related metrics with the following colu
 
 | Column | Description | Data Type | Example |
 |--------|-------------|-----------|---------|
-| timestamp | ISO datetime of the hour | Datetime string | 2024-01-01 00:00:00 |
+| timestamp | Unix timestamp in milliseconds since epoch | Integer | 1704067200000 |
 | price | Market price at end of hour | Float | 42568.23 |
 | volume | Trading volume in that hour | Float | 1245.67 |
 | high | Highest price during the hour | Float | 42612.45 |
@@ -18,6 +18,7 @@ This file contains hourly price data and related metrics with the following colu
 
 **Requirements:**
 - Must be hourly data with no missing hours
+- Timestamps must be in milliseconds since epoch (Unix timestamp * 1000)
 - Timestamps must be in ascending order
 - No missing values allowed
 - At least 12 consecutive hours for prediction (more for training)
