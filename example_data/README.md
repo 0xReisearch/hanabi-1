@@ -15,44 +15,49 @@ This file contains hourly price data and related metrics with the following colu
 | low | Lowest price during the hour | Float | 42501.78 |
 | open | Price at start of hour | Float | 42550.34 |
 | close | Price at end of hour (same as price) | Float | 42568.23 |
-| bid | Highest bid at end of hour | Float | 42565.45 |
-| ask | Lowest ask at end of hour | Float | 42571.32 |
-| spread | Difference between ask and bid | Float | 5.87 |
-| volatility | Realized volatility in that hour | Float | 1.23 |
 
 **Requirements:**
 - Must be hourly data with no missing hours
 - Timestamps must be in ascending order
 - No missing values allowed
-- At least 1000 consecutive hours for reliable training
+- At least 12 consecutive hours for prediction (more for training)
 
 ## 2. Fear & Greed Index Data (`fear_greed_index_example.csv`)
 
-This file contains daily market sentiment data:
+This file contains enhanced daily market sentiment data:
 
 | Column | Description | Data Type | Example |
 |--------|-------------|-----------|---------|
 | date | Date of the fear & greed reading | Date string | 2024-01-01 |
-| value | Fear & Greed index value (0-100) | Integer | 65 |
-| classification | Textual classification | String | Greed |
-| btc_dominance | BTC market dominance percentage | Float | 52.3 |
-| btc_volatility | BTC volatility measure | Float | 1.45 |
-| market_momentum | Market momentum score | Float | 0.87 |
-| social_sentiment | Social media sentiment score | Float | 0.65 |
-| market_volume | Relative market volume score | Float | 1.23 |
+| fng_value | Fear & Greed index value (0-100) | Integer | 65 |
+| fng_classification | Textual classification | String | Greed |
+| fng_7d_ma | 7-day moving average of FNG index | Float | 62.5 |
+| fng_30d_ma | 30-day moving average of FNG index | Float | 58.2 |
+| fng_momentum | Current momentum metric | Float | 0.87 |
+| fng_momentum_7d | 7-day momentum metric | Float | 0.65 |
+| fng_momentum_30d | 30-day momentum metric | Float | 0.42 |
 
 **Requirements:**
 - Daily data (model will interpolate to hourly)
 - Dates must be in ascending order
 - No missing values allowed
 - Should cover the same time period as hourly data
+- Classification values must be one of: "Extreme Fear", "Fear", "Neutral", "Greed", "Extreme Greed"
 
 ## Data Preprocessing
 
 The model's data preprocessor will:
 1. Align timestamps between hourly and fear & greed data
-2. Calculate derived features (price changes, moving averages, etc.)
-3. Normalize features to appropriate ranges
+2. Calculate derived features:
+   - Price range (high - low)
+   - Volatility ((high - low) / low)
+   - Price change percent ((close - open) / open)
+   - Volume change (percent change)
+   - Returns (close price percent change)
+   - Moving averages (3h, 6h, 12h)
+   - RSI indicators (6h, 12h)
+   - Spread estimate (from volume)
+3. Convert fear & greed classification to one-hot encoding
 4. Create target variables (direction, volatility, price change, spread)
 5. Split data into training and validation sets
 
@@ -67,5 +72,9 @@ To use your own data:
 
 Example usage:
 ```bash
-python train_model.py --hourly_data /path/to/your/hourly_data.csv --fear_greed_data /path/to/your/fear_greed_data.csv
+python predict.py \
+    --model_path financial_model_w12_h1_robust.pt \
+    --window_size 12 \
+    --hourly_data /path/to/your/hourly_data.csv \
+    --fear_greed_data /path/to/your/fear_greed_data.csv
 ```
