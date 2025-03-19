@@ -1,0 +1,67 @@
+# Data files
+/hourly_data.csv
+/fear_greed_data/
+*.csv
+!example_data/*.csv
+
+# Trained models
+/trained_models/
+*.pt
+*.pth
+
+# Logs and outputs
+/logs/
+*.log
+/evaluation/
+/predictions/
+training.log
+prediction.log
+evaluation.log
+data_analysis/
+
+# Shell scripts
+*.sh
+
+# Article
+article.md
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Prediction files
+metrics_w12_20250314_100417.json
+predictions_w12_20250314_100417.json
+predictions_w12_20250314_101001.json
+visualizations_w12_20250314_100417.png
