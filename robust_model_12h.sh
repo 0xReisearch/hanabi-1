@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Create necessary directories
-mkdir -p /root/hlmmnn/new_model/trained_models
-mkdir -p /root/hlmmnn/new_model/logs
-mkdir -p /root/hlmmnn/new_model/evaluation
+mkdir -p ./trained_models
+mkdir -p ./logs
+mkdir -p ./evaluation
 
 # Set training parameters with balanced models in mind
 EPOCHS=150
