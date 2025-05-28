@@ -50,9 +50,8 @@ See `example_data/` directory for sample data files with the correct format and 
   - `evaluate_ensemble.py`: Comprehensive evaluation and ensemble support
 
 - **Training Scripts**:
-  - `robust_model.sh`: Main training script for both 4h and 12h models
-  - `balance_test.sh`: Test script for balance penalty mechanism
-  - `seed_test.sh`: Test script for seed-based training
+  - `robust_model_4h.sh`: Main training script for the 4h model
+  - `robust_model_12h.sh`: Main training script for the 12h model
 
 - **Generated Directories**:
   - `trained_models/`: Saved model checkpoints
@@ -70,26 +69,66 @@ pip install -r requirements.txt
 
 ### Training
 
-For full Hanabi-1 training with robust architecture:
+You can train Hanabi-1 with robust architecture using a window of 4h or 12h:
 
 ```bash
-./robust_model.sh
+./robust_model_4h.sh
+```
+
+or
+
+```bash
+./robust_model_12h.sh
 ```
 
 For custom training configuration:
 
 ```bash
 python train_model.py \
+    --hourly_data ./hourly_data.csv \
+    --fear_greed_data ./fear_greed_data/fear_greed_index_enhanced.csv \
     --window_size 4 \
     --horizon 1 \
+    --batch_size 64 \
     --hidden_dim 384 \
     --transformer_layers 8 \
     --num_heads 8 \
     --dropout 0.25 \
-    --learning_rate 0.00008 \
+    --learning_rate 0.00005 \
+    --weight_decay 0.002 \
+    --direction_weight 1.0 \
+    --focal_gamma 1.5 \
+    --epochs 150 \
+    --patience 25 \
+    --min_price_change 0.005 \
     --direction_threshold 0.5 \
-    --min_price_change 0.005
+    --save_path ./trained_models \
+    --seed 42 \
+    --model_suffix "_custom"
 ```
+
+#### Parameter Descriptions
+
+- `--hourly_data`: Path to the hourly data csv file
+- `--fear_greed_data`: Path to the fear and greed index csv file
+- `--window_size`: Number of hours of historical data to use as input (default: 4)
+- `--horizon`: Number of hours ahead to predict (default: 1)
+- `--batch_size`: Batch size for training (default: 64)
+- `--hidden_dim`: Hidden dimension size for the transformer model (default: 384)
+- `--transformer_layers`: Number of transformer encoder layers (default: 8)
+- `--num_heads`: Number of attention heads in multi-head attention (default: 8)
+- `--dropout`: Dropout rate for regularization (default: 0.25)
+- `--learning_rate`: Learning rate for the optimizer (default: 0.00005)
+- `--weight_decay`: Weight decay for L2 regularization (default: 0.002)
+- `--direction_weight`: Weight for the direction prediction loss component (default: 1.0)
+- `--focal_gamma`: Gamma parameter for focal loss to handle class imbalance (default: 1.5)
+- `--epochs`: Maximum number of training epochs (default: 150)
+- `--patience`: Early stopping patience - stops training if no improvement for this many epochs (default: 25)
+- `--min_price_change`: Minimum price change threshold for direction prediction classification (default: 0.005)
+- `--direction_threshold`: Threshold for binary direction prediction (default: 0.5)
+- `--save_path`: Directory path where trained models will be saved (default: ./trained_models)
+- `--seed`: Random seed for reproducibility - if not specified, uses random seed
+- `--model_suffix`: Suffix to add to the model filename for identification purposes
 
 ### Prediction
 

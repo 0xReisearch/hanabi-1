@@ -19,9 +19,6 @@ prediction.log
 evaluation.log
 data_analysis/
 
-# Shell scripts
-*.sh
-
 # Article
 article.md
 
