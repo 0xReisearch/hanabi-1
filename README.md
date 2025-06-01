@@ -30,7 +30,7 @@ The model uses two configurable approaches:
 1. **Hourly Price Data**:
    - Located in `hourly_data.csv` 
    - Contains 90 days of hourly data with:
-     - Timestamp, Open, High, Low, Close, Price, Volume, MarketCap
+     - Timestamp, Price, Volume, Open, High, Low, Close
 
 2. **Fear and Greed Index Data**:
    - Located in `fear_greed_data/fear_greed_index_enhanced.csv`
