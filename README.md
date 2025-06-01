@@ -67,6 +67,13 @@ See `example_data/` directory for sample data files with the correct format and 
 pip install -r requirements.txt
 ```
 
+### Enhance Fear and Greed Data
+Get Fear and Greed data from [here](https://api.alternative.me/fng/?limit=0&format=csv) (select the range you need) and save it to ./fear_greed_data/fear_greed_index.csv. Then run
+
+```python
+python fear_greed_enhancer.py
+```
+
 ### Training
 
 You can train Hanabi-1 with robust architecture using a window of 4h or 12h:
