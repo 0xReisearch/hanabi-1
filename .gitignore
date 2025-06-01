@@ -1,6 +1,5 @@
 # Data files
 /hourly_data.csv
-/fear_greed_data/
 *.csv
 !example_data/*.csv
 
